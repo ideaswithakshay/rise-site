@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rise: Meditate to Wake Up</title>
+<meta name="description" content="An alarm that turns off after you sit still for 3 minutes.">
+<meta property="og:title" content="Rise: Meditate to Wake Up">
+<meta property="og:description" content="An alarm that turns off after you sit still for 3 minutes.">
+<meta property="og:image" content="img/home.jpg">
+<link rel="icon" href="img/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#FFF6EE; --surface:#FFFFFF; --surface2:#FFEBDD; --text:#1C1530; --sub:rgba(28,21,48,.6);
+          --a1:#FF8A3D; --a2:#FF4F8B; --on:#FFFFFF; --grad:linear-gradient(135deg,var(--a1),var(--a2)); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--bg); color:var(--text); font:17px/1.55 Inter,system-ui,sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  h1,h2,h3 { font-family:Nunito,ui-rounded,system-ui,sans-serif; font-weight:900; letter-spacing:-.02em; line-height:1.08; }
+  a { color:inherit; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 20px; }
+  .glow { position:absolute; inset:-200px 0 auto; height:700px; pointer-events:none; background:radial-gradient(600px 380px at 50% 30%, #FF8A3D40, transparent 70%); }
+  nav { display:flex; align-items:center; justify-content:space-between; padding:20px 0; position:relative; z-index:2; }
+  .brand { display:flex; gap:10px; align-items:center; font:900 22px Nunito,sans-serif; text-decoration:none; }
+  .brand img { width:34px; height:34px; border-radius:9px; }
+  .nav-cta { font-weight:600; font-size:15px; text-decoration:none; padding:9px 16px; border-radius:99px; background:var(--surface); }
+  .hero { position:relative; padding:40px 0 80px; display:grid; grid-template-columns:1.1fr .9fr; gap:40px; align-items:center; }
+  .pill { display:inline-block; font-size:14px; font-weight:600; padding:6px 14px; border-radius:99px; background:var(--surface); color:var(--sub); margin-bottom:20px; }
+  .hero h1 { font-size:clamp(44px,7vw,76px); }
+  .grad { background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .lead { font-size:20px; color:var(--sub); margin:20px 0 30px; max-width:520px; }
+  form.waitlist { display:flex; flex-direction:column; gap:12px; max-width:460px; }
+  .row { display:flex; gap:10px; }
+  input[type=email] { flex:1; min-width:0; height:58px; padding:0 20px; border-radius:99px; border:1px solid rgba(128,128,128,.25); background:var(--surface); color:var(--text); font:500 16px Inter,sans-serif; outline:none; }
+  input[type=email]:focus { border-color:var(--a1); }
+  .phones { display:flex; gap:8px; font-size:14px; color:var(--sub); align-items:center; flex-wrap:wrap; }
+  .phones label { cursor:pointer; padding:7px 14px; border-radius:99px; background:var(--surface); border:1px solid transparent; }
+  .phones input { display:none; }
+  .phones label:has(input:checked) { border-color:var(--a1); color:var(--text); }
+  .btn { height:58px; padding:0 28px; border:0; border-radius:99px; background:var(--grad); color:var(--on); font:800 17px Nunito,sans-serif; cursor:pointer; box-shadow:0 10px 30px #FF8A3D40; white-space:nowrap; }
+  .btn:active { transform:scale(.97); }
+  .fine { font-size:13px; color:var(--sub); }
+  .thanks { display:none; padding:18px 20px; border-radius:20px; background:var(--surface); max-width:460px; }
+  .thanks b { font-family:Nunito,sans-serif; font-size:20px; }
+  .phone { width:100%; max-width:330px; margin:0 auto; border-radius:48px; padding:10px; background:#000; box-shadow:0 30px 60px rgba(60,40,20,.18); }
+  .phone img { width:100%; display:block; border-radius:39px; }
+  .hero .phone { transform:rotate(3deg); }
+  .art img { width:100%; max-width:440px; display:block; margin:0 auto; border-radius:48px; box-shadow:0 0 80px #FF8A3D40; }
+  section { padding:90px 0; }
+  .eyebrow { color:var(--a1); font-weight:700; font-size:14px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:12px; }
+  h2 { font-size:clamp(34px,5vw,52px); margin-bottom:16px; }
+  .sub { color:var(--sub); font-size:19px; max-width:620px; }
+  .steps,.math { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:44px; }
+  .card { background:var(--surface); border-radius:28px; padding:28px; box-shadow:0 10px 30px rgba(60,40,20,.06); }
+  .card .n { width:42px; height:42px; border-radius:50%; background:var(--grad); color:var(--on); font:900 20px Nunito,sans-serif; display:grid; place-items:center; margin-bottom:18px; }
+  .card h3 { font-size:24px; margin-bottom:8px; }
+  .card p { color:var(--sub); }
+  .tasks { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:36px; }
+  .task { display:flex; gap:16px; align-items:center; background:var(--surface); border-radius:24px; padding:20px; }
+  .task .e { font-size:34px; width:64px; height:64px; border-radius:18px; background:var(--surface2); display:grid; place-items:center; flex:none; }
+  .task h3 { font-size:21px; margin-bottom:4px; }
+  .math .big { font:900 46px Nunito,sans-serif; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .note { margin-top:18px; color:var(--sub); font-size:14px; }
+  .gallery { display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:44px; }
+  .gallery .phone { border-radius:36px; padding:7px; }
+  .gallery .phone img { border-radius:30px; }
+  figcaption { text-align:center; color:var(--sub); font-size:14px; margin-top:12px; }
+  .faq { margin-top:36px; display:grid; gap:12px; max-width:780px; }
+  details { background:var(--surface); border-radius:20px; padding:20px 24px; }
+  summary { cursor:pointer; font:800 19px Nunito,sans-serif; list-style:none; display:flex; justify-content:space-between; gap:12px; }
+  summary::after { content:"+"; color:var(--a1); font-size:24px; line-height:1; }
+  details[open] summary::after { content:"–"; }
+  details p { color:var(--sub); margin-top:10px; }
+  .final { text-align:center; position:relative; }
+  .final h2 { max-width:760px; margin:0 auto 16px; }
+  .final form.waitlist, .final .thanks { margin:30px auto 0; }
+  .final .phones { justify-content:center; }
+  footer { padding:40px 0 60px; color:var(--sub); font-size:14px; display:flex; gap:20px; flex-wrap:wrap; justify-content:space-between; border-top:1px solid rgba(128,128,128,.2); }
+  footer nav { padding:0; gap:20px; }
+  @media (max-width:860px) {
+    .hero { grid-template-columns:1fr; padding-top:20px; }
+    .hero .phone { max-width:270px; transform:none; }
+    .steps,.math,.tasks { grid-template-columns:1fr; }
+    .gallery { grid-template-columns:repeat(2,1fr); }
+    section { padding:64px 0; }
+  }
+  @media (max-width:480px) { .row { flex-direction:column; } .btn { width:100%; } }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="wrap">
+  <nav><a class="brand" href="#"><img src="img/icon.png" alt="">Rise</a><a class="nav-cta" href="#join">Join the waitlist</a></nav>
+  <header class="hero">
+    <div>
+      <span class="pill">🌅 Coming soon to iPhone</span>
+      <h1>Wake up<br><span class="grad">calm.</span></h1>
+      <p class="lead">Your alarm turns off after you sit still for 3 minutes. Mind first, phone second.</p>
+      
+      <form class="waitlist" data-where="hero">
+        <div class="row">
+          <input type="email" name="email" placeholder="Your email" required autocomplete="email">
+          <button class="btn" type="submit">Get early access</button>
+        </div>
+        <div class="phones"><span>My phone:</span>
+          <label><input type="radio" name="phone" value="iphone" checked><span>iPhone</span></label>
+          <label><input type="radio" name="phone" value="android"><span>Android</span></label>
+        </div>
+      </form>
+      <div class="thanks"><b>You're on the list. 🎉</b><br><span class="fine">We'll email you the day Rise goes live.</span></div>
+    </div>
+    <div class="phone"><img src="img/home.jpg" alt="Rise home screen"></div>
+  </header>
+</div>
+
+<section><div class="wrap">
+  <div class="eyebrow">How it works</div>
+  <h2>Three quiet minutes before the noise.</h2>
+  <p class="sub">No guided voice and no app to open. Just you, sitting still, before the day starts.</p>
+  <div class="steps"><div class="card"><div class="n">1</div><h3>Set your wake time</h3><p>Rise uses a real alarm that rings even on silent.</p></div><div class="card"><div class="n">2</div><h3>Sit up and breathe</h3><p>Prop your phone in front of you. The circle breathes with you.</p></div><div class="card"><div class="n">3</div><h3>Stay still</h3><p>Your camera checks you&#x27;re still. Move and the timer pauses. Then the alarm stops.</p></div></div>
+  <div class="tasks"><div class="task"><div class="e">🧘</div><div><h3>1, 3, 5 or 10 minutes</h3><p class="fine">Start with 1 and work up. Most people pick 3.</p></div></div><div class="task"><div class="e">📷</div><div><h3>Checked on your phone</h3><p class="fine">The camera only checks that you&#x27;re still. Nothing is recorded.</p></div></div></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">The math</div>
+  <h2>Three minutes a day adds up.</h2>
+  <p class="sub">Example numbers for one year.</p>
+  <div class="math"><div class="card"><div class="big">18 hours</div><p>of sitting a year.<br>3 min × 365 ÷ 60</p></div><div class="card"><div class="big">365</div><p>mornings that start calm.<br>1 a day × 365</p></div><div class="card"><div class="big">0</div><p>minutes on your phone<br>before you sit</p></div></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Inside the app</div>
+  <h2>Simple on purpose.</h2>
+  <div class="gallery"><figure><div class="phone"><img src="img/intro.jpg" alt="Wake up calm" loading="lazy"></div><figcaption>Wake up calm</figcaption></figure><figure><div class="phone"><img src="img/mission.jpg" alt="Sit and breathe" loading="lazy"></div><figcaption>Sit and breathe</figcaption></figure><figure><div class="phone"><img src="img/projection.jpg" alt="Your year" loading="lazy"></div><figcaption>Your year</figcaption></figure><figure><div class="phone"><img src="img/home.jpg" alt="Your streak" loading="lazy"></div><figcaption>Your streak</figcaption></figure></div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="eyebrow">Questions</div>
+  <h2>Good questions.</h2>
+  <div class="faq"><details><summary>Do I need to know how to meditate?</summary><p>No. You just sit still and breathe with the circle. That&#x27;s it.</p></details><details><summary>Does the alarm work on silent?</summary><p>Yes. Rise uses Apple&#x27;s alarm system (iOS 26), the same one the Clock app uses.</p></details><details><summary>Does the camera record me?</summary><p>No. It only checks that your face is still. Nothing is saved or uploaded.</p></details><details><summary>Is it on Android?</summary><p>iPhone first. Join the waitlist and pick Android. That tells us how many people want it.</p></details></div>
+</div></section>
+
+<section class="final" id="join"><div class="wrap">
+  <h2>Tomorrow morning, start with stillness.</h2>
+  <p class="sub" style="margin:0 auto">Join the waitlist. Be first to try Rise.</p>
+  
+      <form class="waitlist" data-where="footer">
+        <div class="row">
+          <input type="email" name="email" placeholder="Your email" required autocomplete="email">
+          <button class="btn" type="submit">Get early access</button>
+        </div>
+        <div class="phones"><span>My phone:</span>
+          <label><input type="radio" name="phone" value="iphone" checked><span>iPhone</span></label>
+          <label><input type="radio" name="phone" value="android"><span>Android</span></label>
+        </div>
+      </form>
+      <div class="thanks"><b>You're on the list. 🎉</b><br><span class="fine">We'll email you the day Rise goes live.</span></div>
+</div></section>
+
+<div class="wrap"><footer><span>© 2026 Rise</span><nav><a href="privacy.html">Privacy</a><a href="support.html">Support</a></nav></footer></div>
+
+<script src="config.js"></script>
+<script>
+(function () {
+  const C = window.SITE || {};
+  const get = k => { try { return localStorage.getItem(k); } catch (e) { return null; } };
+  const set = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+  let vid = get("vid"); if (!vid) { vid = Math.random().toString(36).slice(2, 10); set("vid", vid); }
+  const utm = Object.fromEntries(new URLSearchParams(location.search));
+  const isAndroid = /android/i.test(navigator.userAgent);
+  const device = isAndroid ? "android" : (/iphone|ipad/i.test(navigator.userAgent) ? "iphone" : "other");
+  function send(event, data) {
+    if (location.hostname === "localhost" || location.hostname === "127.0.0.1") return;   // don't log my own previews
+    data = data || {};
+    const F = C.FORM, body = new URLSearchParams();
+    body.set(F.event, event); body.set(F.email, data.email || ""); body.set(F.phone, data.phone || "");
+    body.set(F.details, JSON.stringify({ app: C.APP, device, where: data.where, utm, vid, ref: document.referrer }));
+    fetch(F.url, { method: "POST", mode: "no-cors", body, keepalive: true }).catch(() => {});
+  }
+  send("visit");
+  document.querySelectorAll("form.waitlist").forEach(form => {
+    if (isAndroid) form.querySelector('input[value=android]').checked = true;
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      send("signup", { email: fd.get("email"), phone: fd.get("phone"), where: form.dataset.where });
+      document.querySelectorAll("form.waitlist").forEach(f => f.style.display = "none");
+      document.querySelectorAll(".thanks").forEach(t => t.style.display = "block");
+    });
+  });
+})();
+</script>
+</body>
+</html>
